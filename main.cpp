@@ -12,8 +12,6 @@
 using namespace boost::unit_test;
 BOOST_AUTO_TEST_SUITE(test_suite_main)
 
-BOOST_AUTO_TEST_CASE(Kosaraju_test)
-{
 //                   /````\
 //                  /      v
 //    0--->1------>2        3<-,
@@ -25,6 +23,8 @@ BOOST_AUTO_TEST_CASE(Kosaraju_test)
 //          ^     /
 //           \,,,/
 
+BOOST_AUTO_TEST_CASE(Kosaraju_test)
+{
     std::vector<std::vector<int>> testGraph(8);
     testGraph[0].push_back(1);
     testGraph[1].push_back(2);
@@ -41,13 +41,22 @@ BOOST_AUTO_TEST_CASE(Kosaraju_test)
     testGraph[7].push_back(3);
     testGraph[7].push_back(6);
 
-    auto result = graphs::kosaraju(testGraph);
+    auto resultFromRecursionAlgo = graphs::kosarajuRecursion(testGraph);
 
-    BOOST_CHECK_MESSAGE(result.size() == 8, "wrong result size");
-    BOOST_CHECK_MESSAGE(result[0] == result[1], "vertices were not included in the component 0");
-    BOOST_CHECK_MESSAGE(result[1] == result[4], "vertices were not included in the component 0");
-    BOOST_CHECK_MESSAGE(result[2] == result[3], "vertices were not included in the component 1");
-    BOOST_CHECK_MESSAGE(result[3] == result[7], "vertices were not included in the component 1");
-    BOOST_CHECK_MESSAGE(result[5] == result[6], "vertices were not included in the component 2");
+    BOOST_CHECK_MESSAGE(resultFromRecursionAlgo.size() == 8, "wrong result size");
+    BOOST_CHECK_MESSAGE(resultFromRecursionAlgo[0] == resultFromRecursionAlgo[1], "vertices were not included in the component 0");
+    BOOST_CHECK_MESSAGE(resultFromRecursionAlgo[1] == resultFromRecursionAlgo[4], "vertices were not included in the component 0");
+    BOOST_CHECK_MESSAGE(resultFromRecursionAlgo[2] == resultFromRecursionAlgo[3], "vertices were not included in the component 1");
+    BOOST_CHECK_MESSAGE(resultFromRecursionAlgo[3] == resultFromRecursionAlgo[7], "vertices were not included in the component 1");
+    BOOST_CHECK_MESSAGE(resultFromRecursionAlgo[5] == resultFromRecursionAlgo[6], "vertices were not included in the component 2");
+
+    auto resultFromIterativeAlgo = graphs::kosarajuIterative(testGraph);
+
+    BOOST_CHECK_MESSAGE(resultFromIterativeAlgo.size() == 8, "wrong result size");
+    BOOST_CHECK_MESSAGE(resultFromIterativeAlgo[0] == resultFromIterativeAlgo[1], "vertices were not included in the component 0");
+    BOOST_CHECK_MESSAGE(resultFromIterativeAlgo[1] == resultFromIterativeAlgo[4], "vertices were not included in the component 0");
+    BOOST_CHECK_MESSAGE(resultFromIterativeAlgo[2] == resultFromIterativeAlgo[3], "vertices were not included in the component 1");
+    BOOST_CHECK_MESSAGE(resultFromIterativeAlgo[3] == resultFromIterativeAlgo[7], "vertices were not included in the component 1");
+    BOOST_CHECK_MESSAGE(resultFromIterativeAlgo[5] == resultFromIterativeAlgo[6], "vertices were not included in the component 2");
 }
 BOOST_AUTO_TEST_SUITE_END()
